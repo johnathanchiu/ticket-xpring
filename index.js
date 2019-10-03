@@ -16,6 +16,14 @@ admin.initializeApp({
     databaseURL: "https://ticketguru-xpring.firebaseio.com"
 });
 
+var globalPublicKey;
+var globalSecretKey;
+
+function initializeKeys(publicKey, secretKey) {
+    globalPublicKey = publicKey;
+    globalSecretKey = secretKey;
+}
+
 async function main() {
 
     var db = admin.database();
