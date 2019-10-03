@@ -32,23 +32,6 @@ var usersRef = db.ref("users");
 async function main() {
 
     buyTicket(mySecretKey, "ticket_1");
-
-    //const xrpClient = XpringClient.xpringClientWithEndpoint(grpcURL);
-    // const balance = await xrpClient.getBalance(recipientAddress);
-    // console.log("My balance is: " + balance);
-
-    // const amount = new XRPAmount();
-    // amount.setDrops("1");
-    //
-    // const xrpClient = XpringClient.xpringClientWithEndpoint(grpcURL);
-    //
-    // console.log("Retrieving balance for " + testNetAddress);
-    // const balance = await xrpClient.getBalance(testNetAddress);
-    //
-    // console.log("Sending " + amount.getDrops() + " drop of XRP to " + recipientAddress + " from " + wallet.getAddress())
-    // const result = await xrpClient.send(wallet, amount, recipientAddress)
-    //
-    // console.log("Sent with result: " + result.getEngineResultMessage())
 }
 
 
@@ -85,26 +68,23 @@ async function buyTicketRipple(walletID, ticket, offer, ticketID) {
 
     const transaction_id = result['array'][3];
 
-    getBalanceID(xrpClient, ticket['owner']).then( function(result) {
+    getBalanceID(ticket['owner']).then( function(result) {
         console.log(result["array"]);
     });
-
-    //figure out format of result
-    // then update offer in firebase
-
 
     offer['buyer'] = walletID;
     offer['transaction_id'] = transaction_id;
     offersRef.child(ticketID).update(offer);
 
-
+    ticket['history'].push(wallet.getAddress());
 }
 
 
-async function getBalanceID(xpringClient, address) {
-    var balance = await xpringClient.getBalance(address);
+async function getBalanceID(address) {
+    var balance = await xrpClient.getBalance(address);
     return balance;
 }
+
 
 
 
