@@ -41,7 +41,6 @@ app.get('/buyTicket', function(req, res){
     const walletID = req.query.walletID;
     const ticketID = req.query.ticketID;
     const success = buyTicket(walletID, ticketID);
-    res.send({"test":true});
 });
 
 // localhost:8080?privateKey=r123123123
@@ -65,7 +64,9 @@ async function login(privateKey) {
 
 
 app.get('/getUserTickets', function(req, res) {
-
+    const userID = req.query.ownerID;
+    var tickets = await getUserTickets(userID);
+    res.send({"tickets": tickets});
 });
 
 app.get('updatePrice', function(req, res) {
@@ -73,7 +74,9 @@ app.get('updatePrice', function(req, res) {
 });
 
 app.get('toggleAvailability', function(req,res) {
-
+    const id = req.query.id;
+    const price = req.query.price;
+    toggleAvailability(id, price);
 });
 
 app.get('getOffers', function(req,res){
@@ -131,4 +134,3 @@ async function getBalanceID(address) {
     var balance = await xrpClient.getBalance(address);
     return balance;
 }
-
