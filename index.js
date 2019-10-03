@@ -59,7 +59,10 @@ function buyTicket(walletID, ticketID) {
         var ticket = ticketData[ticketID];
 
 
-        buyTicketRipple(walletID, ticket);
+        buyTicketRipple(walletID, ticket).catch(() => {
+            console.log("ticket unable to purchase");
+        }
+    );
 
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
@@ -79,7 +82,7 @@ async function buyTicketRipple(walletID, ticket) {
     // get ticket price from firebase
     amount.setDrops("1000000");
     const result = await xrpClient.send(wallet, amount, ticket['owner']);
-    console.log(result);
+    console.log("results: " + result);
 }
 
 main();
