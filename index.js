@@ -48,12 +48,13 @@ app.get('/buyTicket', function(req, res){
 app.get('/login', function(req, res){
     initializeKeys(req.query.privateKey);
     login(globalSecretKey);
+    res.send("logged in");
 });
 
 // localhost:8080/getUserTickets?ownerID=asdasdasd
 app.get('/getUserTickets', function(req, res) {
     const userID = req.query.ownerID;
-    var tickets = await getUserTickets(userID);
+    var tickets = getUserTickets(userID);
     res.send({"tickets": tickets});
 });
 
@@ -62,6 +63,7 @@ app.get('updatePrice', function(req, res) {
     offersRef.child(req.query.offerID).update({
         "price": req.query.price
     });
+    res.send("updatedPrice");
 });
 
 // localhost:8080/toggleAvailability?ticketID=123123&price=123123
@@ -69,6 +71,7 @@ app.get('toggleAvailability', function(req,res) {
     const ticketID = req.query.ticketID;
     const price = req.query.price;
     toggleAvailability(ticketID, price);
+    res.send("toggled");
 });
 
 // localhost:8080/toggleAvailability?event=s
@@ -80,6 +83,21 @@ app.get('getOffers', function(req,res){
 
 app.listen(8080);
 
+
+async function getUserTickets(ownerID) {
+    var returnTickets = {};
+    await ticketsRef.once('value').then(function(snapshot) {
+        var allTickets = Object.keys(snapshot.val());
+        for (var i = 0; i < allTickets.length; i++) {
+            // console.log(snapshot.val()[allTickets[i]]["owner"]);
+            if (snapshot.val()[allTickets[i]]["owner"] == ownerID) {
+                returnTickets[allTickets[i]] = snapshot.val()[allTickets[i]];
+            }
+        }
+
+    });
+    return returnTickets
+}
 
 async function toggleAvailability(id, price) {
     offersRef.child(id).once('value', function(snapshot) {
