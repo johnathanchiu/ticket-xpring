@@ -64,10 +64,11 @@ app.get('updatePrice', function(req, res) {
     });
 });
 
+// localhost:8080/toggleAvailability?ticketID=123123&price=123123
 app.get('toggleAvailability', function(req,res) {
-    const id = req.query.id;
+    const ticketID = req.query.ticketID;
     const price = req.query.price;
-    toggleAvailability(id, price);
+    toggleAvailability(ticketID, price);
 });
 
 app.get('getOffers', function(req,res){
@@ -76,6 +77,18 @@ app.get('getOffers', function(req,res){
 
 app.listen(8080);
 
+
+async function toggleAvailability(id, price) {
+    offersRef.child(id).once('value', function(snapshot) {
+        if (snapshot.exists()) {
+            db.ref(offersURL + "/" + id).remove();
+        } else {
+            db.ref(offersURL + "/" + id).set({
+                price: price,
+            });
+        }
+    });
+}
 
 async function login(privateKey) {
     var usersCollectionRef = db.ref("users");
