@@ -1,11 +1,14 @@
 const { Wallet, XRPAmount, XpringClient } = require("xpring-js");
+var express = require('express');
+var http = require('http');
+var routes = require('routes');
 var firebase = require("firebase/app");
 
 // An address on TestNet that has a balance.
 const xrpClient = XpringClient.xpringClientWithEndpoint("grpc.xpring.tech:80");
 
-const myPublicKey = "rD6HVurFxabawPD93VXqegp6frahPPqf2W";
-const mySecretKey = "snMHcW5Wie76i9bWHoWBnoCWGgMi7";
+// const myPublicKey = "rD6HVurFxabawPD93VXqegp6frahPPqf2W";
+// const mySecretKey = "snMHcW5Wie76i9bWHoWBnoCWGgMi7";
 
 var admin = require("firebase-admin");
 var serviceAccount = require("./ticketguru.json");
@@ -29,14 +32,29 @@ var ticketsRef = db.ref("tickets");
 var usersRef = db.ref("users");
 
 
-async function main() {
 
-    buyTicket(mySecretKey, "ticket_1");
-}
+var app = express();
+var server = http.createServer(app);
+
+
+app.use(express.static(__dirname + '/public'));
+
+app.get('/buyTicket', function(req, res){
+    console.log("HELLOOOO");
+
+    const walletID = req.query.walletID;
+    const ticketID = req.query.ticketID;
+    const success = buyTicket(walletID, ticketID);
+    res.send(success);
+});
+
+app.listen(8080);
+
+
 
 
 function buyTicket(walletID, ticketID) {
-
+    console.log("BUY TICKET");
     ticketsRef.once("value", function(snapshot) {
         var ticketData = snapshot.val();
         var ticket = ticketData[ticketID];
@@ -46,26 +64,24 @@ function buyTicket(walletID, ticketID) {
             var offer = offersData[ticketID];
 
             buyTicketRipple(walletID, ticket, offer, ticketID).catch(() => {
-                console.log("ticket unable to purchase");
+                return false;
             });
         });
     }), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
+        return false;
     };
+    return true;
 }
 
 async function buyTicketRipple(walletID, ticket, offer, ticketID) {
-    // The expected address of the gRPC server.
     const wallet = Wallet.generateWalletFromSeed(walletID);
-
-    // get ticket data from firebase with specific ticketID
-
     const amount = new XRPAmount();
+
 
     // get ticket price from firebase
     amount.setDrops("" + (offer['price'] * 1000000));
     const result = await xrpClient.send(wallet, amount, ticket['owner']);
-
     const transaction_id = result['array'][3];
 
     getBalanceID(ticket['owner']).then( function(result) {
@@ -75,8 +91,7 @@ async function buyTicketRipple(walletID, ticket, offer, ticketID) {
     offer['buyer'] = walletID;
     offer['transaction_id'] = transaction_id;
     offersRef.child(ticketID).update(offer);
-
-    ticket['history'].push(wallet.getAddress());
+    console.log("MADE IT TO THE END");
 }
 
 
@@ -85,8 +100,3 @@ async function getBalanceID(address) {
     return balance;
 }
 
-
-
-
-
-main();
