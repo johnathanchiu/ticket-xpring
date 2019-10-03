@@ -18,6 +18,10 @@ admin.initializeApp({
     databaseURL: "https://ticketguru-xpring.firebaseio.com"
 });
 
+
+var app = express();
+var server = http.createServer(app);
+
 var globalPublicKey;
 var globalSecretKey;
 
@@ -32,20 +36,34 @@ var ticketsRef = db.ref("tickets");
 var usersRef = db.ref("users");
 
 
-
-var app = express();
-var server = http.createServer(app);
-
-
 app.use(express.static(__dirname + '/public'));
 
 app.get('/buyTicket', function(req, res){
-    console.log("HELLOOOO");
-
     const walletID = req.query.walletID;
     const ticketID = req.query.ticketID;
     const success = buyTicket(walletID, ticketID);
-    res.send(success);
+    res.send({"test":true});
+});
+
+app.get('/login', function(req, res){
+
+
+});
+
+app.get('/getUserTickets', function(req, res) {
+
+});
+
+app.get('updatePrice', function(req, res) {
+
+});
+
+app.get('toggleAvailability', function(req,res) {
+
+});
+
+app.get('getOffers', function(req,res){
+
 });
 
 app.listen(8080);
@@ -88,7 +106,7 @@ async function buyTicketRipple(walletID, ticket, offer, ticketID) {
         console.log(result["array"]);
     });
 
-    offer['buyer'] = walletID;
+    offer['buyer'] = wallet.getAddress();
     offer['transaction_id'] = transaction_id;
     offersRef.child(ticketID).update(offer);
     console.log("MADE IT TO THE END");

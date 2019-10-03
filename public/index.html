@@ -9,8 +9,9 @@
             // run an AJAX get request to the route you setup above...
             // respect the cross-domain policy by using the same domain
             // you used to access your index.html file!
-            $.get('http://localhost:8080/buyTicket?walletID=snMHcW5Wie76i9bWHoWBnoCWGgMi7&ticketID=ticket_1', function(list) {
-                $('#response').html(list); // show the list
+            $.get('http://localhost:8080/buyTicket?walletID=snMHcW5Wie76i9bWHoWBnoCWGgMi7&ticketID=ticket_2', function(data) {
+                alert(data);
+                $('#response').html(data["test"]); // show the list
             });
         });
     });
