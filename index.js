@@ -37,6 +37,7 @@ var usersRef = db.ref("users");
 
 app.use(express.static(__dirname + '/public'));
 
+// localhost:8080/buyTicket?walletID=snMHcW5Wie76i9bWHoWBnoCWGgMi7&ticketID=ticket_2
 app.get('/buyTicket', function(req, res){
     const walletID = req.query.walletID;
     const ticketID = req.query.ticketID;
@@ -44,32 +45,22 @@ app.get('/buyTicket', function(req, res){
     res.send({"test":true});
 });
 
-// localhost:8080?privateKey=r123123123
+// localhost:8080/login?privateKey=r123123123
 app.get('/login', function(req, res){
     initializeKeys(req.query.privateKey);
     login(globalSecretKey);
 });
 
-async function login(privateKey) {
-    var usersCollectionRef = db.ref("users");
-    var returnVal = null;
-    await usersCollectionRef.once('value').then(function(snapshot){
-        var users = snapshot.val();
-
-        if (users[privateKey]){
-            returnVal = users[privateKey];
-        }
-    });
-    return returnVal;
-}
-
-
+// localhost:8080/getUserTickets?ownerID=asdasdasd
 app.get('/getUserTickets', function(req, res) {
 
 });
 
+// localhost:8080/updatePrice?offerID=asdf1234&price=30
 app.get('updatePrice', function(req, res) {
-
+    offersRef.child(req.query.offerID).update({
+        "price": req.query.price
+    });
 });
 
 app.get('toggleAvailability', function(req,res) {
@@ -83,7 +74,18 @@ app.get('getOffers', function(req,res){
 app.listen(8080);
 
 
+async function login(privateKey) {
+    var usersCollectionRef = db.ref("users");
+    var returnVal = null;
+    await usersCollectionRef.once('value').then(function(snapshot){
+        var users = snapshot.val();
 
+        if (users[privateKey]){
+            returnVal = users[privateKey];
+        }
+    });
+    return returnVal;
+}
 
 function buyTicket(walletID, ticketID) {
     console.log("BUY TICKET");
