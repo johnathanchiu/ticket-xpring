@@ -78,6 +78,21 @@ app.get('getOffers', function(req,res){
 app.listen(8080);
 
 
+async function getUserTickets(ownerID) {
+    var returnTickets = {};
+    await ticketsRef.once('value').then(function(snapshot) {
+        var allTickets = Object.keys(snapshot.val());
+        for (var i = 0; i < allTickets.length; i++) {
+            // console.log(snapshot.val()[allTickets[i]]["owner"]);
+            if (snapshot.val()[allTickets[i]]["owner"] == ownerID) {
+                returnTickets[allTickets[i]] = snapshot.val()[allTickets[i]];
+            }
+        }
+
+    });
+    return returnTickets
+}
+
 async function toggleAvailability(id, price) {
     offersRef.child(id).once('value', function(snapshot) {
         if (snapshot.exists()) {
@@ -89,6 +104,8 @@ async function toggleAvailability(id, price) {
         }
     });
 }
+
+
 
 async function login(privateKey) {
     var usersCollectionRef = db.ref("users");
