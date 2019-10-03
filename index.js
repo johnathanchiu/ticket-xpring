@@ -95,4 +95,13 @@ async function buyTicketRipple(walletID, ticket, offer) {
 
 }
 
+
+async function getBalanceID(xpringClient, address) {
+    var balance = await xpringClient.getBalance(address);
+    return balance;
+}
+
+
+
+
 main();
