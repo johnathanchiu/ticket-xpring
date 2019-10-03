@@ -7,6 +7,9 @@ const testNetAddress = "rD7zai6QQQVvWc39ZVAhagDgtH5xwEoeXD";
 const myPublicKey = "rD6HVurFxabawPD93VXqegp6frahPPqf2W";
 const mySecretKey = "snMHcW5Wie76i9bWHoWBnoCWGgMi7";
 
+var globalPublicKey;
+var globalSecretKey;
+
 var firebaseConfig = {
     apiKey: "AIzaSyC85qBnLNM_m0oGKD_UEWpxZ_zBnkfkbr4",
     authDomain: "ticketguru-xpring.firebaseapp.com",
@@ -18,6 +21,11 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+function initializeKeys(publicKey, secretKey) {
+    globalPublicKey = publicKey;
+    globalSecretKey = secretKey;
+}
 
 async function main() {
 

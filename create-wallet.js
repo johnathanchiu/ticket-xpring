@@ -4,7 +4,7 @@ function generateWallet(privateKey) {
     return Wallet.generateWalletFromSeed(privateKey);
 }
 
-async function testGenerateWallet() {
+function testGenerateWallet() {
     const wallet = generateWallet("snYP7oArxKepd3GPDcrjMsJYiJeJB");
     console.log("wallet generated address: " + wallet.getAddress());
 }
