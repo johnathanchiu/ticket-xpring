@@ -58,18 +58,20 @@ function buyTicket(walletID, ticketID) {
         var ticketData = snapshot.val();
         var ticket = ticketData[ticketID];
 
+        offersRef.once("value", function (snapshot) {
+            var offersData = snapshot.val();
+            var offer = offersData[ticketID];
 
-        buyTicketRipple(walletID, ticket).catch(() => {
-            console.log("ticket unable to purchase");
-        }
-    );
-
-    }, function (errorObject) {
+            buyTicketRipple(walletID, ticket, offer).catch(() => {
+                console.log("ticket unable to purchase");
+            });
+        });
+    }), function (errorObject) {
         console.log("The read failed: " + errorObject.code);
-    });
+    };
 }
 
-async function buyTicketRipple(walletID, ticket) {
+async function buyTicketRipple(walletID, ticket, offer) {
     // The expected address of the gRPC server.
     const grpcURL = "grpc.xpring.tech:80";
     const wallet = Wallet.generateWalletFromSeed(walletID);
@@ -80,9 +82,17 @@ async function buyTicketRipple(walletID, ticket) {
     const amount = new XRPAmount();
 
     // get ticket price from firebase
-    amount.setDrops("1000000");
+    amount.setDrops("" + (offer['price'] * 1000000));
     const result = await xrpClient.send(wallet, amount, ticket['owner']);
     console.log("results: " + result);
+
+    //figure out format of result
+    // then update offer in firebase
+    offer['buyer'] = walletID;
+    //offer['transaction_id'] = result[3];
+    console.log(result.split(","));
+
+
 }
 
 main();
