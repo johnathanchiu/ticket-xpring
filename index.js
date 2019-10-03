@@ -25,8 +25,7 @@ var server = http.createServer(app);
 var globalPublicKey;
 var globalSecretKey;
 
-function initializeKeys(publicKey, secretKey) {
-    globalPublicKey = publicKey;
+function initializeKeys(secretKey) {
     globalSecretKey = secretKey;
 }
 
@@ -45,10 +44,25 @@ app.get('/buyTicket', function(req, res){
     res.send({"test":true});
 });
 
+// localhost:8080?privateKey=r123123123
 app.get('/login', function(req, res){
-
-
+    initializeKeys(req.query.privateKey);
+    login(globalSecretKey);
 });
+
+async function login(privateKey) {
+    var usersCollectionRef = db.ref("users");
+    var returnVal = null;
+    await usersCollectionRef.once('value').then(function(snapshot){
+        var users = snapshot.val();
+
+        if (users[privateKey]){
+            returnVal = users[privateKey];
+        }
+    });
+    return returnVal;
+}
+
 
 app.get('/getUserTickets', function(req, res) {
 
