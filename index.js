@@ -48,12 +48,13 @@ app.get('/buyTicket', function(req, res){
 app.get('/login', function(req, res){
     initializeKeys(req.query.privateKey);
     login(globalSecretKey);
+    res.send("logged in");
 });
 
 // localhost:8080/getUserTickets?ownerID=asdasdasd
 app.get('/getUserTickets', function(req, res) {
     const userID = req.query.ownerID;
-    var tickets = await getUserTickets(userID);
+    var tickets = getUserTickets(userID);
     res.send({"tickets": tickets});
 });
 
@@ -62,6 +63,7 @@ app.get('updatePrice', function(req, res) {
     offersRef.child(req.query.offerID).update({
         "price": req.query.price
     });
+    res.send("updatedPrice");
 });
 
 // localhost:8080/toggleAvailability?ticketID=123123&price=123123
@@ -69,6 +71,7 @@ app.get('toggleAvailability', function(req,res) {
     const ticketID = req.query.ticketID;
     const price = req.query.price;
     toggleAvailability(ticketID, price);
+    res.send("toggled");
 });
 
 app.get('getOffers', function(req,res){
@@ -104,8 +107,6 @@ async function toggleAvailability(id, price) {
         }
     });
 }
-
-
 
 async function login(privateKey) {
     var usersCollectionRef = db.ref("users");
