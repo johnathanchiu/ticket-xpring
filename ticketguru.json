@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ticketguru-xpring",
+  "private_key_id": "0e8bf1ab6c404c1d6e324a672af1b0649656ae3c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxk1GKsMwMbXVm\nnlXUF3PIzmR+kTU1+MllOig0Eq40bQxIJRKa8Taha46pa2WRN6nB/qJlwCTKMByA\ntbOpVZy9r2eAaOhvwxQDlQlhb4PwJJSgCREe++2ZugwYvDo171uiO4F95jc/rU8y\nl7nC5vOb7dLNn6vCImKWish83T+KrArPXrv9uERHMioPdxgaks+unasLERxM+pF7\nOIBZx23C0J1yeBWdqt6ho/JlcWZ8h/Icu9r2FgpFdTfAQLAmi5PS8gDbDhoh8RYf\ngjGHQmU/DYkEISWa5zv27lY308+44aeo0K0XxLcyH/ABCMLZCHC8OV9FopAJwTZu\nmKa4iilzAgMBAAECggEAKz8+t7FRMKGj2wcqzgmcKEaj0PNaazeZDO86BVybUqdQ\nO23T9ypR7MQ+LWK7jL9qt5VlRbSjAR7wgiQ+ijoQf13tridenIF9KVYtv64iCuVN\n0SAELHCcsDjQY2HMJ4CQ55Tod5oO0JJL3H15P09x+wLTuUJu2Uv4iMNqCobzx7iw\ne/X1iv6gPJYCkuCAXyhFA07AJsFDqrWHrloGAldUG3l3GQXF+pEhDG2Wad1RI2Xu\nzFb/g/q0hG/fKYNr6YYYiAwfXGu0behWKLRADc/JTSf8hGDS/G3xylaDHrCYEjqu\nkGV7CrWpRi++ZlJ3iLc4Gc025qX+0VADdpidxHONeQKBgQDn/nTb6nhrR6fmaGHS\nanrgYgKCJ7bM39dMd6UMEK386VYf0Vm81bm/NwA8nuc8bTAWx3jKHgAxnshIUm14\nU9JxBrqQmK9rFV3jjpUPp1xKt6ynyi+l7hNN0jota/P5k1C6DpHvacasD/WrOd22\nwbYHxcvUMuOfrlddsRgkGCvStQKBgQDD809xW6nIO+QpLIb0DelzY1I9Ftj/Dgnw\nBlLLe/hQGdFyDq8E+KagliSy8gao4rimSZKfPVIQrGETp7eC/88XskVWfePPiNVn\n5Ty8/NoaxTRcSdlCAC8kHEMoFmFrkd216dzIfKkuT0RKbDZr13ExJW71n4XM13JN\nhvOmKwFchwKBgD/jU0s8xuzETvikxkusByrD0u0FAtJo0mG8kTdBYKjFmXIptQzL\nzttZyjbni8aYSyX6yMjgei0wDPfdu0fnzYxSzg4D/kr/F1wTZ/lnnYL2EhYjF/wa\nFDbaLitUD1wrtY+Hc6j6+DtqKb19shEiR37cecV2Pjk7SdQDcSJ/hZIBAoGAZQYA\nIzVa5zzZeNDYEuNJRJAkShKJdZXLUdAwx2/2qXVmIiOn4CxB2/EMoqVdAZ1CDZlI\n2ohG0wnMUtHZLtSr9E+Yp+rnlIu7WoE5O0YxPDQHtrzsIbbulvNrPDOtrkPZxnv3\ns/VxU8rSLnxz4k2Esg3WkxPXa7B34bh9zWHGpekCgYEAgLZowV4w1UmOXUSPV9UW\ny2abEtt4Ws2aSz5xw2qhw9u8a8+y/ULr0OZINe3JHto1V2crXPrMOLPj/Q/Bpeax\nkQZIohkH/06pFtMdOCO/kcb6lok6j5p3PGYT9XlwiwGN96/Ac3asR0jNlqqVR0iA\n86u6ztqMh6FeL7KON7njsYs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-f7s78@ticketguru-xpring.iam.gserviceaccount.com",
+  "client_id": "100840260846247786207",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-f7s78%40ticketguru-xpring.iam.gserviceaccount.com"
+}

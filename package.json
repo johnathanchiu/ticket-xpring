@@ -7,6 +7,7 @@
   "dependencies": {
     "ripple-lib": "*",
     "firebase": "7.0.0",
+    "firebase-admin": "8.6.0",
     "xpring-js": "1.0.4",
     "xpring-common-js": "1.0.2"
   },

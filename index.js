@@ -7,23 +7,32 @@ const testNetAddress = "rD7zai6QQQVvWc39ZVAhagDgtH5xwEoeXD";
 const myPublicKey = "rD6HVurFxabawPD93VXqegp6frahPPqf2W";
 const mySecretKey = "snMHcW5Wie76i9bWHoWBnoCWGgMi7";
 
-var firebaseConfig = {
-    apiKey: "AIzaSyC85qBnLNM_m0oGKD_UEWpxZ_zBnkfkbr4",
-    authDomain: "ticketguru-xpring.firebaseapp.com",
-    databaseURL: "https://ticketguru-xpring.firebaseio.com",
-    projectId: "ticketguru-xpring",
-    storageBucket: "ticketguru-xpring.appspot.com",
-    messagingSenderId: "1001309157908",
-    appId: "1:1001309157908:web:67a578d236a3918e7b8501"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./ticketguru.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://ticketguru-xpring.firebaseio.com"
+});
 
 async function main() {
 
-    const xrpClient = XpringClient.xpringClientWithEndpoint(grpcURL);
-    const balance = await xrpClient.getBalance(recipientAddress);
-    console.log("My balance is: " + balance);
+    var db = admin.database();
+    var ref = db.ref("offers");
+
+    ref.once("value", function(snapshot) {
+        console.log(snapshot.val());
+        console.log("HELLO");
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+
+
+
+    // const xrpClient = XpringClient.xpringClientWithEndpoint(grpcURL);
+    // const balance = await xrpClient.getBalance(recipientAddress);
+    // console.log("My balance is: " + balance);
 
     // const amount = new XRPAmount();
     // amount.setDrops("1");
@@ -51,7 +60,7 @@ async function buyTicket(walletID, ticketID) {
     const amount = new XRPAmount();
 
     // get ticket price from firebase
-    amount.setDrops("100");
+    amount.setDrops("1000000");
     const result = await xrpClient.send(wallet, amount, recipientAddress)
 
     // update firebase ticket data
