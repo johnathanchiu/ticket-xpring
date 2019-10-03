@@ -71,8 +71,11 @@ app.get('toggleAvailability', function(req,res) {
     toggleAvailability(ticketID, price);
 });
 
+// localhost:8080/toggleAvailability?event=s
 app.get('getOffers', function(req,res){
-
+    const eventName = req.query.event;
+    const offers = getOffers(eventName);
+    res.send({"offers": offers});
 });
 
 app.listen(8080);
@@ -122,6 +125,31 @@ function buyTicket(walletID, ticketID) {
         return false;
     };
     return true;
+}
+
+async function getOffers(eventName) {
+    var dbRef = db.ref();
+    var returnTickets = {};
+    await dbRef.once('value').then(function(snapshot) {
+
+        var allAvailableOffers = Object.keys(snapshot.val()['offers']);
+        var allTickets = snapshot.val()['tickets'];
+
+        for (var i = 0; i < allAvailableOffers.length; i++) {
+            var offerTicket = allAvailableOffers[i];
+
+            // console.log(allTickets[offerTicket]["name"])
+            if (allTickets[offerTicket]["name"] == eventName) {
+
+                returnTickets[offerTicket] = allTickets[offerTicket];
+                returnTickets[offerTicket]['price'] = snapshot.val()['offers'][offerTicket]['price'];
+            }
+        }
+        // console.log(returnTickets);
+
+      });
+
+      return returnTickets;
 }
 
 async function buyTicketRipple(walletID, ticket, offer, ticketID) {
