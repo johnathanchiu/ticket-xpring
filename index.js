@@ -1,4 +1,4 @@
-const { Wallet, XRPAmount, XpringClient } = require("xpring-js")
+const { Wallet, XRPAmount, XpringClient } = require("xpring-js");
 
 // An address on TestNet that has a balance.
 const testNetAddress = "rD7zai6QQQVvWc39ZVAhagDgtH5xwEoeXD";

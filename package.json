@@ -6,6 +6,7 @@
   "//": "Change the license to something appropriate. You may want to use 'UNLICENSED' if you are just starting out.",
   "dependencies": {
     "ripple-lib": "*",
+    "xpring-js": "1.0.4",
     "xpring-common-js": "1.0.2"
   },
   "devDependencies": {
