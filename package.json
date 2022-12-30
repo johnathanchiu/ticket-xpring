@@ -11,7 +11,7 @@
     "ripple-lib": "*",
     "routes": "^2.1.0",
     "xpring-common-js": "1.0.2",
-    "xpring-js": "1.0.4"
+    "xpring-js": "1.6.0"
   },
   "devDependencies": {
     "eslint": "*"
