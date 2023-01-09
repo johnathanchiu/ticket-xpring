@@ -7,7 +7,7 @@
   "dependencies": {
     "express": "4.17.1",
     "firebase": "7.0.0",
-    "firebase-admin": "8.6.0",
+    "firebase-admin": "11.4.1",
     "ripple-lib": "*",
     "routes": "^2.1.0",
     "xpring-common-js": "1.0.2",
